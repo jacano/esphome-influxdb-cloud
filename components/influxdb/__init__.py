@@ -25,7 +25,6 @@ CONFIG_SCHEMA = cv.All(
         cv.Required(CONF_INFLUXDB_MEASUREMENT): cv.string,
     }).extend(cv.COMPONENT_SCHEMA),
     cv.only_with_arduino,
-    cv.only_on(['esp32', 'esp8266']),
 )
 
 @coroutine_with_priority(40.0)
@@ -39,10 +38,6 @@ async def to_code(config):
     cg.add(var.set_bucket(config[CONF_INFLUXDB_BUCKET]))
     cg.add(var.set_measurement(config[CONF_INFLUXDB_MEASUREMENT]))
     
-    if CORE.is_esp32:
-        cg.add_library('WiFiClientSecure', None)
-        cg.add_library('HTTPClient', None)
-    if CORE.is_esp8266:
-        cg.add_library('ESP8266HTTPClient', None)
-    
+    cg.add_library('WiFiClientSecure', None)
+    cg.add_library('HTTPClient', None)
     cg.add_library('tobiasschuerg/ESP8266 Influxdb', '3.13.1')
