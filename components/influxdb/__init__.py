@@ -38,6 +38,5 @@ async def to_code(config):
     cg.add(var.set_bucket(config[CONF_INFLUXDB_BUCKET]))
     cg.add(var.set_measurement(config[CONF_INFLUXDB_MEASUREMENT]))
     
-    cg.add_library('WiFiClientSecure', None)
     cg.add_library('HTTPClient', None)
     cg.add_library('tobiasschuerg/ESP8266 Influxdb', '3.13.1')
